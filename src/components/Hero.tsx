@@ -26,7 +26,7 @@ export function Hero() {
                 initial={{ opacity: 0, y: 50 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.8, ease: "easeOut" }}
-                className="text-4xl sm:text-5xl md:text-6xl font-bold text-gray-900 leading-tight"
+                className="text-2xl sm:text-3xl md:text-6xl font-bold text-gray-900 leading-tight"
               >
                 Buy, Sell, and Connect on Your Campus
               </motion.h1>
@@ -35,14 +35,14 @@ export function Hero() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={isInView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 1, delay: 0.3 }}
-                className="mt-6 text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0"
+                className="mt-6 lg:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0"
               >
                 Your one-stop marketplace for campus essentials. Connect with fellow students,
                 find what you need, and sell what you don't.
               </motion.p>
             </motion.div>
 
-            <div className='grid grid-cols-2 gap-20 mt-8'>
+            <div className='grid lg:grid-cols-2 lg:gap-20 gap-4 mt-8'>
               <motion.div whileHover={{ scale: 1.05 }}>
                 <Button size="lg" className="text-lg px-8">
                   Join Your Campus Marketplace
@@ -59,7 +59,7 @@ export function Hero() {
 
 
           {/* Right Section - Feature Cards */}
-          <div className="relative">
+          <div className="relative mb-10">
             <motion.div
               initial="hidden"
               animate="visible"
@@ -67,32 +67,20 @@ export function Hero() {
                 hidden: { opacity: 0, y: 30 },
                 visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1 } }
               }}
-              className="grid grid-cols-2 gap-6"
+              className="grid lg:grid-cols-2 gap-6"
             >
               <div className="space-y-6">
                 <FeatureCard icon={<ShoppingCart className='text-primary' />} title="Easy Shopping" description="Find campus essentials" />
                 <FeatureCard icon={<Users className='text-accent' />} title="Connect & Share" description="Join your campus community" />
+                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" />
+
               </div>
-              <div className="space-y-6 mt-12">
+              <div className="space-y-6 lg:mt-12">
                 <FeatureCard icon={<ShoppingBag className='text-secondary' />} title="Sell Items" description="List your products easily" />
                 <FeatureCard icon={<UserCheck className='text-primary' />} title="Trusted Users" description="Safe and secure trading" />
-              </div>
-
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.1 } }
-              }}
-              className=" gap-6"
-            >
-              <div className="space-y-6 grid grid-cols-2 gap-6">
-                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" />
                 <FeatureCard icon={<ChartPie className='text-accent' />} title="Supports Seller Analytics" description="Stay up to date with sales analytics" />
-              </div>
 
+              </div>
 
             </motion.div>
           </div>

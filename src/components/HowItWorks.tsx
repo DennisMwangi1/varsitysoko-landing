@@ -39,7 +39,7 @@ export function HowItWorks() {
           {steps.map((step, index) => (
             <div
               key={index}
-              className="group relative p-6 rounded-2xl glass-card hover:shadow-xl transition-all duration-300"
+              className="group relative p-6 my-4 rounded-2xl glass-card hover:shadow-xl transition-all duration-300"
             >
               <div className="absolute -top-6 left-1/2 -translate-x-1/2">
                 <div className="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white shadow-lg group-hover:scale-110 transition-transform duration-300">
