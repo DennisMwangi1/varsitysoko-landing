@@ -1,6 +1,6 @@
 
 import { Button } from "./ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ShoppingBag, Users, UserCheck, ShoppingCart } from "lucide-react";
 
 export function Hero() {
   return (
@@ -26,12 +26,59 @@ export function Hero() {
             </div>
           </div>
           <div className="relative">
-            <div className="animate-float">
-              <img
-                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
-                alt="Student using laptop"
-                className="rounded-2xl shadow-2xl"
-              />
+            <div className="grid grid-cols-2 gap-6">
+              <div className="space-y-6">
+                {/* Shopper with cart */}
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-primary/10 rounded-full">
+                      <ShoppingCart className="w-8 h-8 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Easy Shopping</h3>
+                      <p className="text-sm text-gray-600">Find campus essentials</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Community connection */}
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-accent/10 rounded-full">
+                      <Users className="w-8 h-8 text-accent" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Connect & Share</h3>
+                      <p className="text-sm text-gray-600">Join your campus community</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="space-y-6 mt-12">
+                {/* Seller with bag */}
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-secondary/10 rounded-full">
+                      <ShoppingBag className="w-8 h-8 text-secondary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Sell Items</h3>
+                      <p className="text-sm text-gray-600">List your products easily</p>
+                    </div>
+                  </div>
+                </div>
+                {/* Trusted buyer */}
+                <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg transform hover:-translate-y-1 transition-transform duration-300">
+                  <div className="flex items-center space-x-4">
+                    <div className="p-3 bg-primary/10 rounded-full">
+                      <UserCheck className="w-8 h-8 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-medium text-gray-900">Trusted Users</h3>
+                      <p className="text-sm text-gray-600">Safe and secure trading</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
