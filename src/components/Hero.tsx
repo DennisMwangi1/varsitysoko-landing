@@ -44,7 +44,7 @@ export function Hero() {
 
             <div className='grid lg:grid-cols-2 lg:gap-20 gap-4 mt-8'>
               <motion.div whileHover={{ scale: 1.05 }}>
-                <Button size="lg" className="text-lg px-8">
+                <Button size="lg" className="text-lg lg:px-8 px-2">
                   Join Your Campus Marketplace
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>

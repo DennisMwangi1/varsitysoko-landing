@@ -39,7 +39,7 @@ export function Categories() {
             Discover everything you need for campus life in one place
           </p>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-8">
           {categories.map((category, index) => (
             <div
               key={index}
