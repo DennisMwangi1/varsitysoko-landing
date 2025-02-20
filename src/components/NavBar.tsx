@@ -7,7 +7,7 @@ export function NavBar() {
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex-shrink-0">
-            <h1 className="text-xl font-bold text-primary">VarsitySoko</h1>
+            <h1 className="text-6xl font-light text-primary font-gochi">VARSITYSOKO</h1>
           </div>
           <div className="hidden md:block">
             <div className="ml-10 flex items-center space-x-4">

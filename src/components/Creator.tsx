@@ -19,15 +19,17 @@ export function Creator() {
             <div>
               <h2 className="text-3xl font-bold mb-6">Meet the Creator</h2>
               <p className="text-gray-600 mb-6">
-                Hi, I'm Sarah Kamau, a computer science graduate from the University of Nairobi. 
-                I created VarsitySoko after experiencing firsthand the challenges students face 
-                when trying to buy and sell items on campus. My mission is to make campus commerce 
+                Hi, I'm Dennis Mwangi, a software developer and the founder and creator of VarsitySoko.
+                I created VarsitySoko after experiencing firsthand the challenges students face
+                when trying to buy and sell items on campus. My mission is to make campus commerce
                 safer, easier, and more accessible for every student.
               </p>
+              <p className='mb-6 font-serif italic'>Please email me for a demo of varsitysoko</p>
+
               <div className="space-y-4">
                 <div className="flex items-center space-x-2 text-gray-600">
                   <Mail className="w-5 h-5" />
-                  <span>sarah@varsitysoko.com</span>
+                  <span>denniskamau1803@gmail.com</span>
                 </div>
                 <div className="flex space-x-4">
                   <Button variant="outline" size="icon">
@@ -41,8 +43,8 @@ export function Creator() {
               <div className="mt-8 p-6 rounded-xl bg-primary-50 border border-primary/10">
                 <h3 className="font-semibold mb-2">Our Vision</h3>
                 <p className="text-gray-600">
-                  "To create a trusted marketplace where every university student can easily and safely 
-                  trade within their campus community, fostering sustainable consumption and financial 
+                  "To create a trusted marketplace where every university student can easily and safely
+                  trade within their campus community, fostering sustainable consumption and financial
                   independence."
                 </p>
               </div>
