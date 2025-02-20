@@ -1,7 +1,6 @@
 
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
-import { ShoppingScene } from "./ShoppingScene";
 
 export function Hero() {
   return (
@@ -28,7 +27,11 @@ export function Hero() {
           </div>
           <div className="relative">
             <div className="animate-float">
-              <ShoppingScene />
+              <img
+                src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d"
+                alt="Student using laptop"
+                className="rounded-2xl shadow-2xl"
+              />
             </div>
           </div>
         </div>
