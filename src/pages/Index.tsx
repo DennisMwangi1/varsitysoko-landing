@@ -5,6 +5,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { Categories } from "@/components/Categories";
 import { WhyUs } from "@/components/WhyUs";
 import { Testimonials } from "@/components/Testimonials";
+import { Creator } from "@/components/Creator";
 import { CallToAction } from "@/components/CallToAction";
 import { Footer } from "@/components/Footer";
 
@@ -18,6 +19,7 @@ const Index = () => {
         <Categories />
         <WhyUs />
         <Testimonials />
+        <Creator />
         <CallToAction />
       </main>
       <Footer />
