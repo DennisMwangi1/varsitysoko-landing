@@ -74,7 +74,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-16 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-          <p>&copy; 2024 VarsitySoko. All rights reserved.</p>
+          <p>&copy; 2025 VarsitySoko. All rights reserved.</p>
         </div>
       </div>
     </footer>

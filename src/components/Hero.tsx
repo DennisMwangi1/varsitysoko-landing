@@ -3,27 +3,23 @@ import { Button } from "./ui/button";
 import { ArrowRight, ShoppingBag, Users, UserCheck, ShoppingCart, Bell, MessageCircle, Package, ChartPie, BrainCircuitIcon, BadgeCheck, Calendar, Gift, Globe, Heart, Shield, Star, Tag, ThumbsUp, Truck } from "lucide-react";
 import { useEffect, useRef, useState } from 'react';
 import TypingEffect from './TypingEffect';
+import { ComingSoonModal } from './ComingSoonModal';
 
 
 export function Hero() {
   const ref = useRef(null);
   const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const text = "Your one-stop marketplace for campus essentials. Connect with fellow students, find what you need, and sell what you don't.";
-  const [displayText, setDisplayText] = useState("");
-  const [index, setIndex] = useState(0);
+  const [showComingSoon, setShowComingSoon] = useState(false);
 
-  useEffect(() => {
-    if (index < text.length) {
-      const timeout = setTimeout(() => {
-        setDisplayText((prev) => prev + text[index]);
-        setIndex((prev) => prev + 1);
-      }, 50); // Adjust speed here (50ms per character)
-      return () => clearTimeout(timeout);
+  const scrollToHowItWorks = () => {
+    const howItWorksSection = document.getElementById('how-it-works');
+    if (howItWorksSection) {
+      howItWorksSection.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [index, text]);
+  };
   return (
-    <div className="w-full relative min-h-screen flex items-center justify-center bg-gradient-to-b from-primary-50 to-white pt-16 overflow-hidden">
+    <div className="w-full relative min-h-screen flex items-center justify-center bg-gradient-to-b from-primary-50 to-white pt-16 overflow-hidden ">
       {/* Floating Shapes */}
       <FloatingShapes />
 
@@ -51,12 +47,12 @@ export function Hero() {
 
             <div className='grid lg:grid-cols-2 lg:gap-20 gap-4 mt-8'>
               <motion.div whileHover={{ scale: 1.05 }}>
-                <Button size="lg" className="text-lg lg:px-8 px-2">
+                <Button size="lg" className="text-lg lg:px-8 px-2" onClick={() => setShowComingSoon(true)}>
                   Join Your Campus Marketplace
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
               </motion.div>
-              <motion.div whileHover={{ scale: 1.05 }}>
+              <motion.div whileHover={{ scale: 1.05 }} onClick={scrollToHowItWorks}>
                 <Button size="lg" variant="outline" className="text-lg px-8">
                   Learn More
                 </Button>
@@ -77,15 +73,15 @@ export function Hero() {
               className="grid lg:grid-cols-2 gap-6"
             >
               <div className="space-y-6">
-                <FeatureCard icon={<ShoppingCart className='text-primary' />} title="Easy Shopping" description="Find campus essentials" constraintsRef={containerRef} />
-                <FeatureCard icon={<Users className='text-accent' />} title="Connect & Share" description="Join your campus community" constraintsRef={containerRef} />
-                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" constraintsRef={containerRef} />
+                <FeatureCard icon={<ShoppingCart className='text-primary' />} title="Easy Shopping" description="Find campus essentials" />
+                <FeatureCard icon={<Users className='text-accent' />} title="Connect & Share" description="Join your campus community" />
+                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" />
 
               </div>
               <div className="space-y-6 lg:mt-12">
-                <FeatureCard icon={<ShoppingBag className='text-secondary' />} title="Sell Items" description="List your products easily" constraintsRef={containerRef} />
-                <FeatureCard icon={<UserCheck className='text-primary' />} title="Trusted Users" description="Safe and secure trading" constraintsRef={containerRef} />
-                <FeatureCard icon={<ChartPie className='text-accent' />} title="Supports Seller Analytics" description="Stay up to date with sales analytics" constraintsRef={containerRef} />
+                <FeatureCard icon={<ShoppingBag className='text-secondary' />} title="Sell Items" description="List your products easily" />
+                <FeatureCard icon={<UserCheck className='text-primary' />} title="Trusted Users" description="Safe and secure trading" />
+                <FeatureCard icon={<ChartPie className='text-accent' />} title="Supports Seller Analytics" description="Stay up to date with sales analytics" />
 
               </div>
 
@@ -93,28 +89,16 @@ export function Hero() {
           </div>
         </div>
       </div>
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-white to-transparent"></div>
+      <ComingSoonModal open={showComingSoon} onOpenChange={setShowComingSoon} />
     </div>
   );
 }
 
-// Reusable Feature Card Component with Hover Effect
-const FeatureCard = ({ icon, title, description, constraintsRef }) => {
-  const [isDraggable, setIsDraggable] = useState(false);
-
-  useEffect(() => {
-    const checkScreenSize = () => {
-      setIsDraggable(window.innerWidth >= 1024); // Enable drag for lg: and above
-    };
-
-    checkScreenSize();
-    window.addEventListener("resize", checkScreenSize);
-    return () => window.removeEventListener("resize", checkScreenSize);
-  }, []);
+const FeatureCard = ({ icon, title, description }) => {
 
   return (
     <motion.div
-      drag={isDraggable}
-      dragConstraints={constraintsRef}
       whileHover={{ scale: 1.1, rotateX: 10, rotateY: 10, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
       whileTap={{ scale: 0.95, rotate: -2 }}
       initial={{ opacity: 0, y: 20 }}
@@ -135,8 +119,6 @@ const FeatureCard = ({ icon, title, description, constraintsRef }) => {
 };
 
 
-
-// Floating Shapes Background Animation
 const FloatingShapes = () => {
   return (
     <main className="hidden lg:block">

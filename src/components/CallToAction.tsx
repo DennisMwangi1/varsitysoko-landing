@@ -2,7 +2,10 @@
 import { Button } from "./ui/button";
 import { ArrowRight } from "lucide-react";
 
-export function CallToAction() {
+interface CallToActionProps {
+  setShowSellerForm: (value: boolean) => void;
+}
+export function CallToAction({ setShowSellerForm }: CallToActionProps) {
   return (
     <section className="py-24 bg-white">
       <div className="container mx-auto px-4">
@@ -12,7 +15,7 @@ export function CallToAction() {
             Start buying and selling on your campus marketplace. It takes less than
             2 minutes to get started.
           </p>
-          <Button size="lg" className="text-lg px-8">
+          <Button size="lg" className="text-lg px-8" onClick={() => setShowSellerForm(true)}>
             Start Selling Now
             <ArrowRight className="ml-2 h-5 w-5" />
           </Button>
