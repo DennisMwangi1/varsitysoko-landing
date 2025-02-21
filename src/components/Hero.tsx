@@ -1,12 +1,27 @@
 import { motion, useInView } from "framer-motion";
 import { Button } from "./ui/button";
-import { ArrowRight, ShoppingBag, Users, UserCheck, ShoppingCart, Bell, MessageCircle, Package, ChartPie, BrainCircuitIcon } from "lucide-react";
-import { useRef } from 'react';
+import { ArrowRight, ShoppingBag, Users, UserCheck, ShoppingCart, Bell, MessageCircle, Package, ChartPie, BrainCircuitIcon, BadgeCheck, Calendar, Gift, Globe, Heart, Shield, Star, Tag, ThumbsUp, Truck } from "lucide-react";
+import { useEffect, useRef, useState } from 'react';
+import TypingEffect from './TypingEffect';
 
 
 export function Hero() {
   const ref = useRef(null);
+  const containerRef = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const text = "Your one-stop marketplace for campus essentials. Connect with fellow students, find what you need, and sell what you don't.";
+  const [displayText, setDisplayText] = useState("");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (index < text.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText((prev) => prev + text[index]);
+        setIndex((prev) => prev + 1);
+      }, 50); // Adjust speed here (50ms per character)
+      return () => clearTimeout(timeout);
+    }
+  }, [index, text]);
   return (
     <div className="w-full relative min-h-screen flex items-center justify-center bg-gradient-to-b from-primary-50 to-white pt-16 overflow-hidden">
       {/* Floating Shapes */}
@@ -31,15 +46,7 @@ export function Hero() {
                 Buy, Sell, and Connect on Your Campus
               </motion.h1>
 
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                animate={isInView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 1, delay: 0.3 }}
-                className="mt-6 lg:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0"
-              >
-                Your one-stop marketplace for campus essentials. Connect with fellow students,
-                find what you need, and sell what you don't.
-              </motion.p>
+              <TypingEffect />
             </motion.div>
 
             <div className='grid lg:grid-cols-2 lg:gap-20 gap-4 mt-8'>
@@ -59,7 +66,7 @@ export function Hero() {
 
 
           {/* Right Section - Feature Cards */}
-          <div className="relative mb-10">
+          <div className="relative mb-10" ref={containerRef}>
             <motion.div
               initial="hidden"
               animate="visible"
@@ -70,15 +77,15 @@ export function Hero() {
               className="grid lg:grid-cols-2 gap-6"
             >
               <div className="space-y-6">
-                <FeatureCard icon={<ShoppingCart className='text-primary' />} title="Easy Shopping" description="Find campus essentials" />
-                <FeatureCard icon={<Users className='text-accent' />} title="Connect & Share" description="Join your campus community" />
-                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" />
+                <FeatureCard icon={<ShoppingCart className='text-primary' />} title="Easy Shopping" description="Find campus essentials" constraintsRef={containerRef} />
+                <FeatureCard icon={<Users className='text-accent' />} title="Connect & Share" description="Join your campus community" constraintsRef={containerRef} />
+                <FeatureCard icon={<BrainCircuitIcon className='text-primary' />} title="AI Powered Features" description="Enjoy essential features powered by AI" constraintsRef={containerRef} />
 
               </div>
               <div className="space-y-6 lg:mt-12">
-                <FeatureCard icon={<ShoppingBag className='text-secondary' />} title="Sell Items" description="List your products easily" />
-                <FeatureCard icon={<UserCheck className='text-primary' />} title="Trusted Users" description="Safe and secure trading" />
-                <FeatureCard icon={<ChartPie className='text-accent' />} title="Supports Seller Analytics" description="Stay up to date with sales analytics" />
+                <FeatureCard icon={<ShoppingBag className='text-secondary' />} title="Sell Items" description="List your products easily" constraintsRef={containerRef} />
+                <FeatureCard icon={<UserCheck className='text-primary' />} title="Trusted Users" description="Safe and secure trading" constraintsRef={containerRef} />
+                <FeatureCard icon={<ChartPie className='text-accent' />} title="Supports Seller Analytics" description="Stay up to date with sales analytics" constraintsRef={containerRef} />
 
               </div>
 
@@ -91,32 +98,52 @@ export function Hero() {
 }
 
 // Reusable Feature Card Component with Hover Effect
-const FeatureCard = ({ icon, title, description }) => (
-  <motion.div
-    whileHover={{ scale: 1.05, rotate: 10 }}
-    initial={{ opacity: 0, y: 20, }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.1, ease: "easeOut" }} // Faster response on hover
-    className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg transform transition-transform duration-300"
-  >
-    <div className="flex items-center space-x-4">
-      <div className="p-3 bg-primary/10 rounded-full">{icon}</div>
-      <div>
-        <h3 className="font-medium text-gray-900">{title}</h3>
-        <p className="text-sm text-gray-600">{description}</p>
+const FeatureCard = ({ icon, title, description, constraintsRef }) => {
+  const [isDraggable, setIsDraggable] = useState(false);
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      setIsDraggable(window.innerWidth >= 1024); // Enable drag for lg: and above
+    };
+
+    checkScreenSize();
+    window.addEventListener("resize", checkScreenSize);
+    return () => window.removeEventListener("resize", checkScreenSize);
+  }, []);
+
+  return (
+    <motion.div
+      drag={isDraggable}
+      dragConstraints={constraintsRef}
+      whileHover={{ scale: 1.1, rotateX: 10, rotateY: 10, boxShadow: "0px 10px 20px rgba(0, 0, 0, 0.2)" }}
+      whileTap={{ scale: 0.95, rotate: -2 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      dragTransition={{ bounceStiffness: 200, bounceDamping: 100 }}
+      className="bg-white/80 backdrop-blur-md rounded-2xl p-6 shadow-lg transform transition-transform duration-200"
+    >
+      <div className="flex items-center space-x-4">
+        <div className="p-3 bg-primary/10 rounded-full">{icon}</div>
+        <div>
+          <h3 className="font-medium text-gray-900">{title}</h3>
+          <p className="text-sm text-gray-600">{description}</p>
+        </div>
       </div>
-    </div>
-  </motion.div>
-);
+    </motion.div>
+  );
+};
+
+
 
 // Floating Shapes Background Animation
 const FloatingShapes = () => {
   return (
-    <main className=' hidden lg:block'>
+    <main className="hidden lg:block">
       {/* Floating Shopping Cart Icon */}
       <motion.div
         animate={{ y: [0, 20, 0], opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 20, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-40 left-40"
       >
         <ShoppingCart className="text-primary w-8 h-8 drop-shadow-lg" />
@@ -125,7 +152,7 @@ const FloatingShapes = () => {
       {/* Floating Message Icon */}
       <motion.div
         animate={{ y: [-20, 10, -20], opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-10 right-1/4"
       >
         <MessageCircle className="text-secondary w-8 h-8 drop-shadow-lg" />
@@ -134,15 +161,16 @@ const FloatingShapes = () => {
       {/* Floating Package Icon */}
       <motion.div
         animate={{ y: [15, -10, 15], opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute top-28 right-16"
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-68 right-16"
       >
         <Package className="text-accent w-8 h-8 drop-shadow-lg" />
       </motion.div>
+
       {/* Floating Users Icon */}
       <motion.div
         animate={{ y: [-15, 5, -15], opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-20 left-24"
       >
         <Users className="text-primary w-8 h-8 drop-shadow-lg" />
@@ -151,10 +179,102 @@ const FloatingShapes = () => {
       {/* Floating Bell Icon */}
       <motion.div
         animate={{ y: [10, -15, 10], opacity: [0, 1, 1, 0] }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        transition={{ duration: 13, repeat: Infinity, ease: "easeInOut" }}
         className="absolute top-60 right-1/3"
       >
         <Bell className="text-secondary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* New Floating Icons */}
+
+      {/* Floating Truck Icon */}
+      <motion.div
+        animate={{ y: [-10, 15, -10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/2 right-1/2"
+      >
+        <Truck className="text-accent w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Star Icon */}
+      <motion.div
+        animate={{ y: [10, -10, 10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-1/2 left-10"
+      >
+        <Star className="text-primary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Heart Icon */}
+      <motion.div
+        animate={{ y: [-15, 5, -15], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-40 right-1/2"
+      >
+        <Heart className="text-secondary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Thumbs Up Icon */}
+      <motion.div
+        animate={{ y: [12, -12, 12], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-32 right-32"
+      >
+        <ThumbsUp className="text-accent w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Gift Icon */}
+      <motion.div
+        animate={{ y: [-10, 10, -10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-20 right-1/4"
+      >
+        <Gift className="text-primary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Badge Check Icon */}
+      <motion.div
+        animate={{ y: [10, -10, 10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-60 right-1/3"
+      >
+        <BadgeCheck className="text-secondary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Tag Icon */}
+      <motion.div
+        animate={{ y: [-10, 15, -10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-1/3 left-1/4"
+      >
+        <Tag className="text-accent w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Shield Icon */}
+      <motion.div
+        animate={{ y: [15, -15, 15], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-40 right-3/4"
+      >
+        <Shield className="text-primary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Globe Icon */}
+      <motion.div
+        animate={{ y: [-12, 12, -12], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute top-52 right-40"
+      >
+        <Globe className="text-secondary w-8 h-8 drop-shadow-lg" />
+      </motion.div>
+
+      {/* Floating Calendar Icon */}
+      <motion.div
+        animate={{ y: [10, -10, 10], opacity: [0, 1, 1, 0] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        className="absolute bottom-5 right-1/2"
+      >
+        <Calendar className="text-accent w-8 h-8 drop-shadow-lg" />
       </motion.div>
     </main>
   );
